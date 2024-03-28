@@ -33,18 +33,21 @@ def process_image(image_path, transform, model, label_colors, classes, thrh, fin
     prediction = model(data, size) 
     labels, boxes, scores = prediction
 
+    # for draw to original sized image########
     ratio_width = image_width / 640
     ratio_height = image_height / 640
     original_box_coordinates = boxes.clone() 
     original_box_coordinates[0][:, [0, 2]] *= ratio_width
     original_box_coordinates[0][:, [1, 3]] *= ratio_height
+    boxes = original_box_coordinates
+    ##########################################
 
     result_list = []
     for i in range(len(labels[0])):
         score = float(scores[0][i])
         if score >= thrh:
             label = int(labels[0][i]) - 1
-            box = original_box_coordinates[0][i].tolist()
+            box = boxes[0][i].tolist()
             result_list.append([label, box, score])
 
     save_path = os.path.join(fin_dest, image_name)

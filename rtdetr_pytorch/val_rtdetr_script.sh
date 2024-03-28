@@ -1,0 +1,2 @@
+CUDA_VISIBLE_DEVICES=0
+torchrun /home/cv_task/RT-DETR/rtdetr_pytorch/tools/train.py -c /home/cv_task/RT-DETR/rtdetr_pytorch/configs/rtdetr/alarad_c1_rtdetr_r101vd_6x.yml -r [weight(pth) path] --test-only
